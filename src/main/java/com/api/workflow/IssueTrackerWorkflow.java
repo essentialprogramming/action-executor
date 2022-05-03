@@ -6,7 +6,7 @@ import com.api.actions.ActionType;
 import com.api.entities.Story;
 import com.api.mapper.StoryMapper;
 import com.api.model.StoryInput;
-import com.api.output.ExecutionStepJSON;
+import com.api.output.ExecutionHistoryJSON;
 import com.api.repository.StoryRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -32,7 +32,7 @@ public class IssueTrackerWorkflow implements Workflow<Story> {
      * Start action flow and save Story entity to the database
      */
     @Transactional
-    public List<ExecutionStepJSON> executeAction(final StoryInput storyInput) {
+    public ExecutionHistoryJSON executeAction(final StoryInput storyInput) {
         final Story story = StoryMapper.inputToEntity(storyInput);
         storyRepository.save(story);
 
@@ -40,8 +40,11 @@ public class IssueTrackerWorkflow implements Workflow<Story> {
     }
 
     @Override
-    public List<ExecutionStepJSON> execute(final Story story) {
-        return actionExecutor.executeAction(ActionType.ASSIGN_STORY, story);
+    public ExecutionHistoryJSON execute(final Story story) {
+        return ExecutionHistoryJSON.builder()
+                .storyKey(story.getStoryKey())
+                .executionSteps(actionExecutor.executeAction(ActionType.ASSIGN_STORY, story))
+                .build();
     }
 
     @Override

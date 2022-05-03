@@ -6,6 +6,7 @@ import com.actions.model.ActionResult;
 import com.actions.utils.objects.Preconditions;
 import com.api.entities.Story;
 import com.api.mapper.ActionResultMapper;
+import com.api.output.ExecutionHistoryJSON;
 import com.api.output.ExecutionStepJSON;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -35,7 +36,7 @@ public class ActionExecutor<T> {
      *
      * @param actionName action name
      * @param target     target
-     * @return ActionResult[]  The results of all executed actions/workflow steps
+     * @return A list of all executed actions/workflow steps
      */
     public List<ExecutionStepJSON> executeAction(final ActionName actionName, final T target) {
         Preconditions.assertNotNull(actionName, "actionName");

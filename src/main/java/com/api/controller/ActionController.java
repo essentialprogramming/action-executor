@@ -1,5 +1,6 @@
 package com.api.controller;
 
+import com.api.output.ExecutionHistoryJSON;
 import com.api.output.ExecutionStepJSON;
 import com.api.model.StoryInput;
 import com.api.workflow.IssueTrackerWorkflow;
@@ -30,10 +31,10 @@ public class ActionController {
     @Operation(summary = "Execute actions", description = "Simulate story start, implementation, pull request, and completion",
                 responses = {
                         @ApiResponse(responseCode = "200", description = "Returns 200 if action was successfully completed",
-                                content = @Content(array = @ArraySchema(schema = @Schema(implementation = ExecutionStepJSON.class))))
+                                content = @Content(schema = @Schema(implementation = ExecutionHistoryJSON.class)))
                 }
     )
-    public List<ExecutionStepJSON> executeAction(@Valid @RequestBody StoryInput storyInput) {
+    public ExecutionHistoryJSON executeAction(@Valid @RequestBody StoryInput storyInput) {
         return issueTrackerWorkflow.executeAction(storyInput);
     }
 }
