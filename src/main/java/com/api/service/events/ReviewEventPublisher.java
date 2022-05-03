@@ -1,4 +1,4 @@
-package com.actions.executor;
+package com.api.service.events;
 
 import com.actions.model.ActionCompleteEvent;
 import com.api.actions.ActionType;
@@ -11,14 +11,14 @@ import org.springframework.stereotype.Component;
 @Component
 @Slf4j
 @RequiredArgsConstructor
-public class ActionEventPublisher {
+public class ReviewEventPublisher {
 
     private final ApplicationEventPublisher applicationEventPublisher;
 
-    public void publishActionReviewEvent(Story story) {
+    public void publishActionReviewEvent(final Story story) {
 
-        log.info("Pull request review received for story {}. Status {}", story.getName(), story.getStatus());
-        ActionCompleteEvent<Story> actionCompleteEvent = new ActionCompleteEvent<>(story, ActionType.SEND_PULL_REQUEST_EVENT, story);
+        log.info("Pull request review finished for story {}", story.getName());
+        ActionCompleteEvent<Story> actionCompleteEvent = new ActionCompleteEvent<>(this, ActionType.SEND_PULL_REQUEST_EVENT, story);
         applicationEventPublisher.publishEvent(actionCompleteEvent);
     }
 }

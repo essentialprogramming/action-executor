@@ -15,7 +15,7 @@ import javax.validation.constraints.NotNull;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class StoryInput {
 
-    @Schema(example = "Implement user account API")
+    @Schema(example = "`Implement Hello World`")
     @NotNull(message = "Story name can not be null!")
     @JsonProperty("name")
     private String name;

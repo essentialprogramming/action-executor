@@ -18,9 +18,10 @@ import java.util.stream.Collectors;
 
 @Component
 @Slf4j
-public class ImplementStory implements Action<Story> {
+@SuppressWarnings({"FieldCanBeLocal", "SameParameterValue"})
+public class ImplementRequirementsAction implements Action<Story> {
 
-    private final String FILE_PATH = "sample/code.txt";
+    private static final String FILE_PATH = "sample/code.txt";
 
     @Override
     public ActionName getName() {
@@ -28,7 +29,7 @@ public class ImplementStory implements Action<Story> {
     }
 
     @Override
-    public ActionResult<Story> execute(Story story) {
+    public ActionResult<Story> execute(final Story story) {
 
         story.setStatus(Status.IN_PROGRESS);
         log.info("Assignee {} started working on story {}. Status {}.", story.getAssignee(), story.getName(), story.getStatus());
@@ -38,17 +39,20 @@ public class ImplementStory implements Action<Story> {
         return ActionResult.success();
     }
 
-    private void typeToConsole() {
+    private static void typeToConsole() {
 
         final String code = readFile(FILE_PATH);
 
         code.chars().forEach(character -> {
             System.out.printf("%c", character);
-            parkThread(100);
+            parkThread(70);
         });
+
+        System.out.println();
+        parkThread(700);
     }
 
-    private String readFile(final String filePath) {
+    private static String readFile(final String filePath) {
 
         try {
             Resource resource = new ClassPathResource(filePath);
@@ -61,7 +65,7 @@ public class ImplementStory implements Action<Story> {
         }
     }
 
-    private void parkThread(final Integer ms) {
+    private static void parkThread(final Integer ms) {
 
         final Duration parkPeriod = Duration.of(ms, ChronoUnit.MILLIS);
         final Thread current = Thread.currentThread();

@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Slf4j
-public class StartStory implements Action<Story> {
+public class AssignStoryAction implements Action<Story> {
 
     @Override
     public ActionName getName() {
@@ -19,11 +19,12 @@ public class StartStory implements Action<Story> {
     }
 
     @Override
-    public ActionResult<Story> execute(Story story) {
+    public ActionResult<Story> execute(final Story story) {
 
         story.setStatus(Status.CREATED);
         log.info("Story {} assigned to {}. Status {}.", story.getName(), story.getAssignee(), story.getStatus());
 
-        return ActionResult.success();
+        return ActionResult.success(story);
+
     }
 }

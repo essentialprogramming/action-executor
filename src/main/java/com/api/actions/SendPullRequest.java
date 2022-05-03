@@ -9,11 +9,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 
-import java.time.Duration;
-import java.time.temporal.ChronoUnit;
-import java.util.concurrent.Callable;
-import java.util.concurrent.locks.LockSupport;
-
 @Component
 @Slf4j
 public class SendPullRequest implements Action<Story> {

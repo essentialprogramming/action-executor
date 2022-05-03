@@ -1,6 +1,6 @@
 package com.api.service;
 
-import com.actions.executor.ActionEventPublisher;
+import com.api.service.events.ReviewEventPublisher;
 import com.api.entities.Story;
 import com.api.mapper.StoryMapper;
 import com.api.output.StoryJSON;
@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 public class StoryService {
 
     private final StoryRepository storyRepository;
-    private final ActionEventPublisher actionEventPublisher;
+    private final ReviewEventPublisher reviewEventPublisher;
 
     /**
      * Looks up and retrieves all user stories stored in the database.
@@ -36,6 +36,6 @@ public class StoryService {
         Story story = storyRepository.findByStoryKey(storyKey)
                 .orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND, "Story not found!"));
 
-        actionEventPublisher.publishActionReviewEvent(story);
+        reviewEventPublisher.publishActionReviewEvent(story);
     }
 }
