@@ -3,9 +3,11 @@ package com.actions.utils.model;
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 
+import java.io.Serializable;
+
 @RequiredArgsConstructor
 @Builder
-public class Failure {
+public class Failure implements Serializable {
 
     private final String code;
     private final String description;

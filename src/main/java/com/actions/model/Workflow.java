@@ -2,8 +2,9 @@ package com.actions.model;
 
 
 
+import com.api.output.ExecutionStepJSON;
+
 import java.util.List;
-import java.util.Map;
 
 public interface Workflow<T> {
 
@@ -16,7 +17,7 @@ public interface Workflow<T> {
      *
      * @return an execution history
      */
-    Map<String, ActionResult<T>> execute(final T target);
+    List<ExecutionStepJSON> execute(final T target);
 
     /**
      * Checks if the passed action is part of the actions in the workflow.

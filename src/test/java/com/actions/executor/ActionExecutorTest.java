@@ -3,19 +3,27 @@ package com.actions.executor;
 import com.actions.model.Action;
 import com.actions.model.ActionName;
 import com.actions.model.ActionResult;
+import com.actions.model.ActionStatus;
 import com.actions.utils.objects.Preconditions;
-import java.util.Collections;
 import lombok.val;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.*;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockedStatic;
+import org.mockito.Mockito;
+import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+
+import java.util.Collections;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.doReturn;
 
 @ExtendWith(MockitoExtension.class)
-public class ActionExecutorTest<T> {
+class ActionExecutorTest<T> {
 
     private static MockedStatic<Preconditions> preconditionsMock;
 
@@ -31,7 +39,6 @@ public class ActionExecutorTest<T> {
 
     @Mock
     private T target;
-
 
 
     @BeforeAll
@@ -53,6 +60,6 @@ public class ActionExecutorTest<T> {
         val result = actionExecutor.executeAction(actionName, target);
 
         //then
-        assertTrue(result.get("test-action").isSuccess());
+        assertEquals(ActionStatus.SUCCESS, result.get(0).getActionResult().getStatus());
     }
 }
